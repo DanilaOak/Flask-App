@@ -1,0 +1,5 @@
+
+dev_config = {
+    "DEBUG": True,
+    "SECRET_KEY": 'my_secret_key',
+}
