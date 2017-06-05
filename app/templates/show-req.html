@@ -1,0 +1,9 @@
+<!-- extend base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Requirements -</h1>
+    {%  for req in requirements %}
+    <h2>{{ req }}</h2>
+    {% endfor %}
+{% endblock %}

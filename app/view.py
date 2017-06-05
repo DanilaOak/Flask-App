@@ -13,4 +13,7 @@ def get_my_ip():
     ip = {"ip2": request.headers.get('X-Forwarded-For')}
     return render_template("your-ip.html", user_ip=ip, title='Your IP')
 
-
+def get_req():
+    r = open('requirements.txt')
+    req = r.read().split('\n')
+    return render_template('show-req.html', requirements=req, title='Show Requirements')
