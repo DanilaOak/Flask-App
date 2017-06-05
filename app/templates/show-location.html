@@ -1,0 +1,9 @@
+<!-- extend base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Your Location:</h1>
+    {% for i in user_info %}
+    <h2>{{ i }} = {{ user_info[i] }}</h2>
+    {% endfor %}
+{% endblock %}
