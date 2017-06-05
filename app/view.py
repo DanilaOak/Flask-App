@@ -7,8 +7,11 @@ def index():
     return render_template('index.html', title='Hello World')
 
 def gen_pass():
-    context = {'password': gen_password(), 'title': 'Password Generator'}
-    return render_template('password-gen.html', data=context, title=context['title'])
+    if request.method == 'GET':
+        return render_template('password-gen.html', title='Password Generator')
+    else:
+        context = {'password': gen_password(int(request.form["Len"]))}
+        return render_template('password-gen.html', data=context, title='Password Generator')
 
 def get_my_ip():
     ip = {"ip2": request.headers.get('X-Forwarded-For')}

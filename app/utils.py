@@ -7,4 +7,4 @@ def gen_password(size=8):
 
 
 if __name__ == '__main__':
-    print(gen_password())
+    print(gen_password(20))
