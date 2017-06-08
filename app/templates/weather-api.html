@@ -1,0 +1,11 @@
+<!-- extend base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>{{ title }}</h1>
+    <div>
+    {% for w_info in weather_info %}
+        {{ w_info }}:  {{ weather_info[w_info] }}<br>
+    {% endfor %}
+    </div>
+{% endblock %}

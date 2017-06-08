@@ -1,6 +1,6 @@
 from flask import Flask
 from app import config
-from .view import index, gen_pass, get_my_ip, get_req, get_location
+from .view import index, gen_pass, get_my_ip, get_req, location, weather
 
 app = Flask(__name__)
 app.config.update(config.dev_config)
@@ -14,4 +14,6 @@ app.add_url_rule('/your-ip.html', view_func=get_my_ip)
 
 app.add_url_rule('/show-req.html', view_func=get_req)
 
-app.add_url_rule('/show-location.html', view_func=get_location)
+app.add_url_rule('/show-location.html', view_func=location)
+
+app.add_url_rule('/weather-api.html', view_func=weather)
