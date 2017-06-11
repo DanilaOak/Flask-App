@@ -2,9 +2,8 @@ import string
 import random
 import geoip2.database
 from flask import request
-import json
-import urllib
 import requests
+from app.config import DevConfig
 
 
 def gen_password(size=8):
@@ -13,7 +12,9 @@ def gen_password(size=8):
 
 
 def get_location():
-    reader = geoip2.database.Reader('GeoLite2-City.mmdb')
+    geo_db = 'GeoLite2-City.mmdb'
+    print(DevConfig.APP_DIR)
+    reader = geoip2.database.Reader(DevConfig.APP_DIR + '/db-utils/' + geo_db)
     if request.headers.get('X-Forwarded-For') != None:
         ip = request.headers.get('X-Forwarded-For')
     else:
@@ -47,5 +48,7 @@ def get_weather():
         'Pressure(millibars)': w['slp_mb']
     }
     return result
+
+
 if __name__ == '__main__':
     print(gen_password(20))

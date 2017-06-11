@@ -18,5 +18,4 @@ app.add_url_rule('/show-location.html', view_func=location)
 
 app.add_url_rule('/weather-api.html', view_func=weather)
 
-app.add_url_rule('/reg-user.html',
-                 view_func=UserReg.as_view('registration'))
+app.add_url_rule('/reg-user.html', view_func=UserReg.as_view('registration'))

@@ -1,11 +1,5 @@
 import os
 
-dev_config = {
-    "DEBUG": True,
-    "SECRET_KEY": 'my_secret_key',
-}
-
-
 class Config(object):
     """Base configuration."""
     APP_DIR = os.path.abspath(os.path.dirname(__file__))  # This directory
@@ -27,3 +21,7 @@ class TestConfig(Config):
     """Тестовая конфигурация."""
     TESTING = True
     SECRET_KEY = 'my_test_secret_key'
+
+if __name__ == '__main__':
+    print(BASE_DIR)
+    print(PROJ_DIR)

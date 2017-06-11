@@ -1,6 +1,8 @@
 from flask import render_template, request
 from .utils import gen_password, get_location, get_weather
 from flask.views import MethodView
+from app.config import DevConfig
+
 
 class UserReg(MethodView):
     def get(self):
@@ -34,7 +36,7 @@ def get_my_ip():
 
 
 def get_req():
-    with open('requirements.txt', 'r') as r:
+    with open(DevConfig.APP_DIR[:-3] + 'requirements.txt', 'r') as r:
         req = r.read().split('\n')
     return render_template('show-req.html', requirements=req, title='Show Requirements')
 
