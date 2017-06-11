@@ -4,6 +4,7 @@ import geoip2.database
 from flask import request
 import json
 import urllib
+import requests
 
 
 def gen_password(size=8):
@@ -27,27 +28,24 @@ def get_location():
         'Location Latitude': response.location.latitude,
         'Location Longitude': response.location.longitude
     }
-    print(response.city.geoname_id)
     reader.close()
     return info
 
 def get_weather():
     user_info = get_location()
-    url = 'http://api.weatherunlocked.com/api/current/{},{}?app_id=93a259af&app_key=3bfb8f6927fc76e827be0237be7c8c5b'.format(
-            user_info['Location Latitude'], user_info['Location Longitude'])
-    w = urllib.request.urlopen(url)
-    json_string = w.read()
-    parsed_json = json.loads(json_string)
+    user_lat = user_info['Location Latitude']
+    user_lon = user_info['Location Longitude']
+    url = 'http://api.weatherunlocked.com/api/current/{},{}'.format(user_lat, user_lon)
+    payload = {'app_id': '93a259af', 'app_key': '3bfb8f6927fc76e827be0237be7c8c5b'}
+    req = requests.get(url, params=payload).text
+    w = dict(item.split(':') for item in req[1:-2].replace('"', '').split(','))
     result = {
-        'Weather Description': parsed_json['wx_desc'],
-        'Temperature': parsed_json['temp_c'],
-        'Feel like Temperature': parsed_json['feelslike_c'],
-        'Wind Speed(kilometers per hour)': parsed_json['windspd_kmh'],
-        'Pressure(millibars)': parsed_json['slp_mb']
+        'Weather Description': w['wx_desc'],
+        'Temperature': w['temp_c'],
+        'Feel like Temperature': w['feelslike_c'],
+        'Wind Speed(kilometers per hour)': w['windspd_kmh'],
+        'Pressure(millibars)': w['slp_mb']
     }
-    w.close()
-    print(parsed_json)
     return result
-
 if __name__ == '__main__':
     print(gen_password(20))

@@ -1,0 +1,14 @@
+<!-- extend base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+    <form method="POST" action="">
+        <input type="text" name="login">
+        <input type="password" name="password">
+        <input type="submit">
+    </form>
+    {% if data %}
+        <p>{{ data['login'] }}</p>
+        <p>{{ data['password'] }}</p>
+    {% endif %}
+{% endblock %}
