@@ -1,0 +1,16 @@
+<!-- extend base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Show Customers</h1>
+    <form action ="" method="POST">
+        <p>Enter the required customers limit
+            <input type="text" name="Limit" required pattern="^[ 0-9]+$" placeholder="0"></input>
+            <input type="submit" value="Submit"></input></p>
+    </form>
+    {% if customers %}
+        {% for i in customers %}
+            <h5> {{ i }}</h5>
+        {% endfor %}
+    {% endif %}
+{% endblock %}

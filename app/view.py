@@ -2,6 +2,7 @@ from flask import render_template, request
 from .utils import gen_password, get_location, get_weather
 from flask.views import MethodView
 from app.config import DevConfig
+from app.db_utils.utils_db import User, get_all_customers
 
 
 class UserReg(MethodView):
@@ -36,7 +37,7 @@ def get_my_ip():
 
 
 def get_req():
-    with open(DevConfig.APP_DIR[:-3] + 'requirements.txt', 'r') as r:
+    with open(DevConfig.PROJECT_ROOT + '/requirements.txt', 'r') as r:
         req = r.read().split('\n')
     return render_template('show-req.html', requirements=req, title='Show Requirements')
 
@@ -48,3 +49,12 @@ def location():
 def weather():
     weather_info = get_weather()
     return render_template('weather-api.html', weather_info=weather_info, title='Weather Info')
+
+class AllCustomers(MethodView):
+    def get(self):
+        return render_template('show-customers.html', title='All Customers')
+
+    def post(self):
+        customers = get_all_customers(int(request.form["Limit"]))
+        users = [User(i).to_dict() for i in customers]
+        return render_template('show-customers.html', customers=users, title='Show Customers')

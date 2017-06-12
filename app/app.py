@@ -1,6 +1,6 @@
 from flask import Flask
 from app.config import DevConfig
-from app.view import index, get_my_ip, get_req, location, weather, UserReg, PasswordGen
+from app.view import index, get_req, UserReg, get_my_ip, location, weather, location, PasswordGen, AllCustomers
 
 app = Flask(__name__)
 app.config.from_object(DevConfig)
@@ -19,3 +19,5 @@ app.add_url_rule('/show-location.html', view_func=location)
 app.add_url_rule('/weather-api.html', view_func=weather)
 
 app.add_url_rule('/reg-user.html', view_func=UserReg.as_view('registration'))
+
+app.add_url_rule('/show-customers.html', view_func=AllCustomers.as_view('all customers'))
