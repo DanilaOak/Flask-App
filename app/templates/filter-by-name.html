@@ -1,0 +1,17 @@
+<!-- extend base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Filter Customers By Name</h1>
+    <form action ="" method="POST">
+        <p>Enter begining and end of a word<br>
+            <input type="text" name="Start" pattern="^[a-zA-Z]+$" placeholder="abc">Start </input>
+            <input type="text" name="End" pattern="^[a-zA-Z]+$" placeholder="abc">End</input><br>
+            <input type="submit" value="Submit"></input></p>
+    </form>
+    {% if customers %}
+        {% for i in customers %}
+            <h5> {{ i }}</h5>
+        {% endfor %}
+    {% endif %}
+{% endblock %}

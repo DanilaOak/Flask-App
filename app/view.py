@@ -2,7 +2,7 @@ from flask import render_template, request
 from .utils import gen_password, get_location, get_weather
 from flask.views import MethodView
 from app.config import DevConfig
-from app.db_utils.utils_db import User, get_all_customers
+from app.db_utils.utils_db import User, get_all_customers, filter_by_name
 
 
 class UserReg(MethodView):
@@ -50,6 +50,7 @@ def weather():
     weather_info = get_weather()
     return render_template('weather-api.html', weather_info=weather_info, title='Weather Info')
 
+
 class AllCustomers(MethodView):
     def get(self):
         return render_template('show-customers.html', title='All Customers')
@@ -58,3 +59,14 @@ class AllCustomers(MethodView):
         customers = get_all_customers(int(request.form["Limit"]))
         users = [User(i).to_dict() for i in customers]
         return render_template('show-customers.html', customers=users, title='Show Customers')
+
+
+class FilterByName(MethodView):
+    def get(self):
+        return render_template('filter-by-name.html', title='Filter Customers By Name')
+
+    def post(self):
+        customers = filter_by_name(str(request.form["Start"]), str(request.form["End"]))
+        users = [User(i).to_dict() for i in customers]
+        return render_template('filter-by-name.html', customers=users, title='Filter Customers By Name')
+

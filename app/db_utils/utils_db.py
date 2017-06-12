@@ -37,8 +37,23 @@ class User:
     def to_dict(self):
         return dict(self.__dict__)
 
+
+def filter_by_name(start='', end=''):
+    conn = sqlite3.connect(DIR + '/chinook.db')
+    print("Opened database successfully")
+    cursor = conn.cursor()
+    cursor.execute('''SELECT * FROM customers 
+WHERE FirstName LIKE "{}%" AND FirstName LIKE "%{}"'''.format(start, end))
+    result = cursor.fetchall()
+    conn.close()
+    return result
+
 if __name__ == '__main__':
-    customers = get_all_customers(3)
+    # customers = get_all_customers(3)
+    # print(customers)
+    # user_customers = {i[0]: User(i).to_dict() for i in customers}
+    # print(user_customers)
+    customers = filter_by_name('a', 'e')
     print(customers)
     user_customers = {i[0]: User(i).to_dict() for i in customers}
     print(user_customers)
