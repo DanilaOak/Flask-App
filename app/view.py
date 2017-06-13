@@ -2,7 +2,7 @@ from flask import render_template, request
 from .utils import gen_password, get_location, get_weather
 from flask.views import MethodView
 from app.config import DevConfig
-from app.db_utils.utils_db import User, get_all_customers, filter_by_name
+from app.db_utils.utils_db import User, get_all_customers, filter_by_name, filter_company_city_state
 
 
 class UserReg(MethodView):
@@ -69,4 +69,19 @@ class FilterByName(MethodView):
         customers = filter_by_name(str(request.form["Start"]), str(request.form["End"]))
         users = [User(i).to_dict() for i in customers]
         return render_template('filter-by-name.html', customers=users, title='Filter Customers By Name')
+
+
+class FilterCityCompanyState(MethodView):
+    def get(self):
+        return render_template('filter-company-city-state.html', title='Filter City, Company and State')
+
+    def post(self):
+        customers = filter_company_city_state(str(request.form["City"]),
+                                              str(request.form["Company"]),
+                                              str(request.form["State"])
+                                              )
+        users = [User(i).to_dict() for i in customers]
+        return render_template('filter-company-city-state.html',
+                               customers=users,
+                               title='Filter City, Company and State')
 

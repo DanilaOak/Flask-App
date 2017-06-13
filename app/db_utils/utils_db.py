@@ -48,13 +48,39 @@ WHERE FirstName LIKE "{}%" AND FirstName LIKE "%{}"'''.format(start, end))
     conn.close()
     return result
 
+
+def filter_company_city_state(city='', company='',  state=''):
+    city = city if len(city) > 0 else '%'
+    company = company if len(company) > 0 else None
+    state = state if len(state) > 0 else None
+    conn = sqlite3.connect(DIR + '/chinook.db')
+    print("Opened database successfully")
+    cursor = conn.cursor()
+    if company and state:
+        cursor.execute('''SELECT * FROM customers 
+        WHERE Company LIKE "{}" AND City LIKE "{}" 
+        AND State LIKE "{}"'''.format(company, city, state))
+    elif company:
+        cursor.execute('''SELECT * FROM customers 
+        WHERE Company LIKE "{}" AND City LIKE "{}"'''.format(company, city))
+    elif state:
+        cursor.execute('''SELECT * FROM customers 
+        WHERE City LIKE "{}" 
+        AND State LIKE "{}"'''.format(city, state))
+    else:
+        cursor.execute('''SELECT * FROM customers 
+        WHERE City LIKE "{}"'''.format(city))
+    result = cursor.fetchall()
+    conn.close()
+    return result
+
+
 if __name__ == '__main__':
-    # customers = get_all_customers(3)
-    # print(customers)
-    # user_customers = {i[0]: User(i).to_dict() for i in customers}
-    # print(user_customers)
-    customers = filter_by_name('a', 'e')
-    print(customers)
+    customers = get_all_customers()
+    user_customers = {i[0]: User(i).to_dict() for i in customers}
+    print(user_customers)
+    
+    customers = filter_company_city_state()
     user_customers = {i[0]: User(i).to_dict() for i in customers}
     print(user_customers)
 
