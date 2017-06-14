@@ -1,8 +1,6 @@
 from flask import Flask
 from app.config import DevConfig
-from app.view import index, get_req, UserReg, \
-    get_my_ip, location, weather, location, \
-    PasswordGen, AllCustomers, FilterByName, FilterCityCompanyState
+from app.view import index, get_req, UserReg, get_my_ip, location, weather, location, PasswordGen, AllCustomers, FilterByName, FilterCityCompanyState, AwesomeUrl
 
 app = Flask(__name__)
 app.config.from_object(DevConfig)
@@ -28,4 +26,7 @@ app.add_url_rule('/filter-by-name.html', view_func=FilterByName.as_view('filter 
 
 app.add_url_rule('/filter-company-city-state.html',
                  view_func=FilterCityCompanyState.as_view('filter city, company and state'))
+
+app.add_url_rule('/awesome-url.html',
+                 view_func=AwesomeUrl.as_view('awesome + json'))
 

@@ -2,8 +2,9 @@ from flask import render_template, request
 from .utils import gen_password, get_location, get_weather
 from flask.views import MethodView
 from app.config import DevConfig
-from app.db_utils.utils_db import User, get_all_customers, filter_by_name, filter_company_city_state
-
+from app.db_utils.utils_db import User, get_all_customers, filter_by_name, filter_company_city_state, awesome
+import json
+from app import app
 
 class UserReg(MethodView):
     def get(self):
@@ -85,3 +86,19 @@ class FilterCityCompanyState(MethodView):
                                customers=users,
                                title='Filter City, Company and State')
 
+
+class AwesomeUrl(MethodView):
+    def get(self):
+        return render_template('awesome-url.html', title='Filter City, Company and State')
+
+    def post(self):
+        customers = awesome(str(request.form["Ordering"]),
+                            str(request.form["Limit"])
+                            )
+        users = [User(i).to_dict() for i in customers]
+        response = app.app.response_class(
+            response=json.dumps(users),
+            status=200,
+            mimetype='application/json'
+        )
+        return response

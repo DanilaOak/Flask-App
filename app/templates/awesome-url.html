@@ -1,0 +1,19 @@
+<!-- extend base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>{{ title }}</h1>
+    <form action ="" method="POST">
+        <p>Enter the search parameters<br>
+            ASC - start of word<br>
+            DESC - end of word<br><br>
+            <input type="text" name="Ordering" pattern="(ASC|DESC)" placeholder="ASC or DESC"> Ordering By</input><br>
+            <input type="text" name="Limit" pattern="[ 0-9]+$" placeholder="0"> Limit </input><br>
+        <p><input type="submit" value="Submit"></input></p>
+    </form>
+    {% if customers %}
+        {% for i in customers %}
+            <h5> {{ i }}</h5>
+        {% endfor %}
+    {% endif %}
+{% endblock %}

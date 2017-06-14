@@ -1,5 +1,6 @@
 import sqlite3
 import os
+import json
 
 DIR = os.path.abspath(os.path.dirname(__file__))
 
@@ -75,14 +76,39 @@ def filter_company_city_state(city='', company='',  state=''):
     return result
 
 
+def awesome(ordering='', limit=''):
+    ordering = ordering if len(ordering) > 0 else 'ASC'
+    limit = limit if limit.isdigit() and int(limit) > 0 else 0
+    conn = sqlite3.connect(DIR + '/chinook.db')
+    print("Opened database successfully")
+    cursor = conn.cursor()
+    if limit > 0:
+        cursor.execute('''SELECT * 
+                          FROM customers 
+                          ORDER BY CustomerID {} 
+                          LIMIT {}'''.format(ordering, limit))
+    else:
+        cursor.execute('''SELECT * 
+                          FROM customers 
+                          ORDER BY CustomerID {}'''.format(ordering))
+    result = cursor.fetchall()
+    conn.close()
+    return result
+
+
 if __name__ == '__main__':
     customers = get_all_customers()
-    user_customers = {i[0]: User(i).to_dict() for i in customers}
+    user_customers = [User(i).to_dict() for i in customers]
     print(user_customers)
-    
+
     customers = filter_company_city_state()
-    user_customers = {i[0]: User(i).to_dict() for i in customers}
+    user_customers = [User(i).to_dict() for i in customers]
     print(user_customers)
+
+    customers = awesome(limit=2)
+    user = [User(i).to_dict() for i in customers]
+    user_json = json.dumps(user)
+    print(user_json)
 
 
 
