@@ -78,7 +78,7 @@ def filter_company_city_state(city='', company='',  state=''):
 
 def awesome(ordering='', limit=''):
     ordering = ordering if len(ordering) > 0 else 'ASC'
-    limit = limit if limit.isdigit() and int(limit) > 0 else 0
+    limit = int(limit) if limit.isdigit() and int(limit) > 0 else 0
     conn = sqlite3.connect(DIR + '/chinook.db')
     print("Opened database successfully")
     cursor = conn.cursor()

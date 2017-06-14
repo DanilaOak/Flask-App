@@ -14,7 +14,7 @@ def gen_password(size=8):
 def get_location():
     geo_db = 'GeoLite2-City.mmdb'
     print(DevConfig.APP_DIR)
-    reader = geoip2.database.Reader(DevConfig.APP_DIR + '/db-utils/' + geo_db)
+    reader = geoip2.database.Reader(DevConfig.APP_DIR + '/db_utils/' + geo_db)
     if request.headers.get('X-Forwarded-For') != None:
         ip = request.headers.get('X-Forwarded-For')
     else:
