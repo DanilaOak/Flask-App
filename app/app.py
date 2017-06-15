@@ -6,6 +6,9 @@ app = Flask(__name__)
 app.config.from_object(DevConfig)
 
 app.add_url_rule('/', view_func=index)
+
+# todo don't need to use .html in routes
+# rewrite view functions to Classes
 app.add_url_rule('/index.html', view_func=index)
 
 app.add_url_rule('/password-gen.html', view_func=PasswordGen.as_view('password generator'))
@@ -27,6 +30,6 @@ app.add_url_rule('/filter-by-name.html', view_func=FilterByName.as_view('filter 
 app.add_url_rule('/filter-company-city-state.html',
                  view_func=FilterCityCompanyState.as_view('filter city, company and state'))
 
+# awesome + json is bad name
 app.add_url_rule('/awesome-url.html',
                  view_func=AwesomeUrl.as_view('awesome + json'))
-

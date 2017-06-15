@@ -27,4 +27,3 @@ class TestConfig(Config):
 
 if __name__ == '__main__':
     print(DevConfig.PROJECT_ROOT)
-

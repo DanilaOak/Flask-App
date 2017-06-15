@@ -2,6 +2,9 @@ import sqlite3
 import os
 import json
 
+# this should be in configs
+# replace databases to separate package
+
 DIR = os.path.abspath(os.path.dirname(__file__))
 
 
@@ -112,3 +115,14 @@ if __name__ == '__main__':
 
 
 
+# you can create some helper function
+#def exec_query(query):
+    # DIR should be from configs
+#    conn = sqlite3.connect(DIR + '/chinook.db')
+#    print("Opened database successfully")
+#    cursor = conn.cursor()
+#    cursor.execute(query)
+#    result = cursor.fetchall()
+#    conn.close()
+#    return result
+#    todo something like this

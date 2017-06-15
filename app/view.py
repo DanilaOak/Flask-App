@@ -1,4 +1,6 @@
 from flask import render_template, request
+
+# no related imports
 from .utils import gen_password, get_location, get_weather
 from flask.views import MethodView
 from app.config import DevConfig
@@ -96,6 +98,9 @@ class AwesomeUrl(MethodView):
                             str(request.form["Limit"])
                             )
         users = [User(i).to_dict() for i in customers]
+
+        # from flask import jsonify
+        # try to use this object instead
         response = app.app.response_class(
             response=json.dumps(users),
             status=200,
